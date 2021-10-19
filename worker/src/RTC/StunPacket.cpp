@@ -491,14 +491,6 @@ namespace RTC
 
 	void StunPacket::Authenticate(const std::string& password)
 	{
-		// Just for Request, Indication and SuccessResponse messages.
-		if (this->klass == Class::ERROR_RESPONSE)
-		{
-			MS_ERROR("cannot set password for ErrorResponse messages");
-
-			return;
-		}
-
 		this->password = password;
 	}
 
@@ -513,7 +505,7 @@ namespace RTC
 		  ((this->xorMappedAddress != nullptr) && this->method == StunPacket::Method::BINDING &&
 		   this->klass == Class::SUCCESS_RESPONSE);
 		bool addErrorCode        = ((this->errorCode != 0u) && this->klass == Class::ERROR_RESPONSE);
-		bool addMessageIntegrity = (this->klass != Class::ERROR_RESPONSE && !this->password.empty());
+		bool addMessageIntegrity = (!this->password.empty());
 		bool addFingerprint{ true }; // Do always.
 
 		// Update data pointer.

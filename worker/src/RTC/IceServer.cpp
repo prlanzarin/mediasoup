@@ -167,6 +167,12 @@ namespace RTC
 					// Reply 487 (Role Conflict).
 					RTC::StunPacket* response = packet->CreateErrorResponse(487);
 
+					// Authenticate the response.
+					if (this->oldPassword.empty())
+						response->Authenticate(this->password);
+					else
+						response->Authenticate(this->oldPassword);
+
 					response->Serialize(StunSerializeBuffer);
 					this->listener->OnIceServerSendStunPacket(this, response, tuple);
 
