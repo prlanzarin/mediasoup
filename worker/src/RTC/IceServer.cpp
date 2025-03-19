@@ -835,6 +835,10 @@ namespace RTC
 	{
 		MS_TRACE();
 
+		if (this->selectedTuple) {
+			this->selectedTuple->Dump();
+		}
+
 		// Check the current selected tuple (if any).
 		if (this->selectedTuple && this->selectedTuple->Compare(tuple))
 		{
@@ -845,6 +849,7 @@ namespace RTC
 		for (const auto& it : this->tuples)
 		{
 			auto* storedTuple = const_cast<RTC::TransportTuple*>(std::addressof(it));
+			tuple->Dump();
 
 			if (storedTuple->Compare(tuple))
 			{
