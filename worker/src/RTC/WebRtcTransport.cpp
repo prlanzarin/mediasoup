@@ -1069,6 +1069,7 @@ namespace RTC
 		if (!this->iceServer->IsValidTuple(tuple))
 		{
 			MS_WARN_TAG(rtcp, "ignoring RTCP packet coming from an invalid tuple");
+			tuple->Dump();
 
 			return;
 		}
